@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "33441336050",
+    "project_id": "ditonton-c1180",
+    "storage_bucket": "ditonton-c1180.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:33441336050:android:42a971f477861a027d1e6b",
+        "android_client_info": {
+          "package_name": "com.dicoding.ditonton"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "33441336050-s362pplv48obh4khrguoic9p8msf7p3k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCkUKh8DsKvGx_xN087A_NWti__pqxV-r4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "33441336050-s362pplv48obh4khrguoic9p8msf7p3k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
