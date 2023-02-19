@@ -1,0 +1,140 @@
+{
+  "adult": false,
+  "backdrop_path": "/qcpC9lv6VLL4Zw45EveYELyje1w.jpg",
+  "created_by": [
+    {
+      "id": 1846290,
+      "credit_id": "5f8476a169eb900038be37e3",
+      "name": "Leena Gangopadhyay",
+      "gender": 1,
+      "profile_path": "/zHaUe3Lckgsm12xNtqMq99jPnyO.jpg"
+    }
+  ],
+  "episode_run_time": [
+    22
+  ],
+  "first_air_date": "2020-10-05",
+  "genres": [
+    {
+      "id": 18,
+      "name": "Drama"
+    },
+    {
+      "id": 10766,
+      "name": "Soap"
+    },
+    {
+      "id": 10751,
+      "name": "Family"
+    }
+  ],
+  "homepage": "",
+  "id": 111453,
+  "in_production": true,
+  "languages": [
+    "ar",
+    "hi",
+    "en"
+  ],
+  "last_air_date": "2023-02-03",
+  "last_episode_to_air": {
+    "air_date": "2023-02-03",
+    "episode_number": 750,
+    "id": 4206523,
+    "name": "Episode 750",
+    "overview": "",
+    "production_code": "",
+    "runtime": null,
+    "season_number": 1,
+    "show_id": 111453,
+    "still_path": null,
+    "vote_average": 0,
+    "vote_count": 0
+  },
+  "name": "Gumm Hai Kisi Ke Pyaar Mein",
+  "next_episode_to_air": {
+    "air_date": "2023-02-04",
+    "episode_number": 751,
+    "id": 4206527,
+    "name": "Episode 751",
+    "overview": "",
+    "production_code": "",
+    "runtime": null,
+    "season_number": 1,
+    "show_id": 111453,
+    "still_path": null,
+    "vote_average": 0,
+    "vote_count": 0
+  },
+  "networks": [
+    {
+      "id": 159,
+      "name": "StarPlus",
+      "logo_path": "/9cEITzi1VyVkre3Fom57vJBOEW3.png",
+      "origin_country": "IN"
+    },
+    {
+      "id": 3208,
+      "name": "MBC Bollywood",
+      "logo_path": "/qgqH40mKhkpQPlxNypAazPoyCHG.png",
+      "origin_country": "AE"
+    }
+  ],
+  "number_of_episodes": 760,
+  "number_of_seasons": 1,
+  "origin_country": [
+    "IN"
+  ],
+  "original_language": "hi",
+  "original_name": "घुम है किसिकी प्यार में",
+  "overview": "Virat sacrifices his love to honour the promise he made to a dying man. Trapped between the past and the present, will he find love beyond the chains of duty?",
+  "popularity": 1780.011,
+  "poster_path": "/uNjnoT3RChs2r7O9pDyx7TNBvIj.jpg",
+  "production_companies": [
+    {
+      "id": 141735,
+      "logo_path": null,
+      "name": "Cockcrow Entertainment & Shaika Films",
+      "origin_country": ""
+    }
+  ],
+  "production_countries": [
+    {
+      "iso_3166_1": "IN",
+      "name": "India"
+    }
+  ],
+  "seasons": [
+    {
+      "air_date": "2020-10-05",
+      "episode_count": 760,
+      "id": 165574,
+      "name": "Season 1",
+      "overview": "",
+      "poster_path": "/uNjnoT3RChs2r7O9pDyx7TNBvIj.jpg",
+      "season_number": 1
+    }
+  ],
+  "spoken_languages": [
+    {
+      "english_name": "Arabic",
+      "iso_639_1": "ar",
+      "name": "العربية"
+    },
+    {
+      "english_name": "Hindi",
+      "iso_639_1": "hi",
+      "name": "हिन्दी"
+    },
+    {
+      "english_name": "English",
+      "iso_639_1": "en",
+      "name": "English"
+    }
+  ],
+  "status": "Returning Series",
+  "tagline": "",
+  "type": "Scripted",
+  "vote_average": 5.5,
+  "vote_count": 24
+}

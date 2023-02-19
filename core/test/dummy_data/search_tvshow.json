@@ -1,0 +1,26 @@
+{
+  "page": 1,
+  "results": [
+    {
+      "backdrop_path": "/xYkydf9m337nG9guG7MpBWumPOh.jpg",
+      "first_air_date": "1991-12-01",
+      "genre_ids": [
+        35
+      ],
+      "id": 8086,
+      "name": "The Julekalender",
+      "origin_country": [
+        "DK"
+      ],
+      "original_language": "da",
+      "original_name": "The Julekalender",
+      "overview": "The Julekalender was a Danish TV series that ran at Christmas 1991. It was written and performed almost entirely by a trio of Danish comedy musicians called De Nattergale with financial and technical assistance from TV2, a Danish television company. It was hugely successful at the time, causing many invented phrases from the series to enter popular culture and was later released on VHS, and recently, DVD.\n\nIt had 24 episodes, as has been typical of other TV \"calendars\" before and since The Julekalender.",
+      "popularity": 4.739,
+      "poster_path": "/qn2s2z8yo1Tv0DhOe0SLz6MPgTx.jpg",
+      "vote_average": 7.9,
+      "vote_count": 12
+    }
+  ],
+  "total_pages": 4,
+  "total_results": 62
+}
