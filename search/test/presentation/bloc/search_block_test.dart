@@ -10,7 +10,7 @@ import 'package:search/bloc/search_state.dart';
 import 'package:search/domain/usecase/search_movies.dart';
 
 import '../../movie_search_notifier_test.mocks.dart';
-import '../../../lib/bloc/search_event.dart';
+import 'package:search/bloc/search_event.dart';
 
 @GenerateMocks([SearchMovies])
 void main() {

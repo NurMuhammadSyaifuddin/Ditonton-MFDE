@@ -87,3 +87,6 @@ flutter:
 workflows:
   release-workflow:
     name: Release
+
+module:
+  androidX: true
