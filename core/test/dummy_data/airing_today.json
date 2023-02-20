@@ -1,6 +1,6 @@
 {
   "page": 1,
-  "results": [
+  "results":
     {
       "backdrop_path": "/qcpC9lv6VLL4Zw45EveYELyje1w.jpg",
       "first_air_date": "2020-10-05",
@@ -22,7 +22,7 @@
       "vote_average": 5.5,
       "vote_count": 24
     }
-  ],
+  ,
   "total_pages": 9,
   "total_results": 163
 }

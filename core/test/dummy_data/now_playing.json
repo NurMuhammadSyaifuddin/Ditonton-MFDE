@@ -4,7 +4,7 @@
     "minimum": "2021-04-05"
   },
   "page": 1,
-  "results": [
+  "results":
     {
       "adult": false,
       "backdrop_path": "/path.jpg",
@@ -25,8 +25,7 @@
       "video": false,
       "vote_average": 1.0,
       "vote_count": 1
-    }
-  ],
+    },
   "total_pages": 47,
   "total_results": 940
 }
