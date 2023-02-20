@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/movie/movie.dart';
 
 class MovieModel extends Equatable {
-  MovieModel({
+  const MovieModel({
     required this.adult,
     required this.backdropPath,
     required this.genreIds,
@@ -36,7 +36,7 @@ class MovieModel extends Equatable {
   factory MovieModel.fromJson(Map<String, dynamic> json) => MovieModel(
         adult: json["adult"],
         backdropPath: json["backdrop_path"],
-        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+        genreIds: List<int>.from(json["genre_ids"]),
         id: json["id"],
         originalTitle: json["original_title"],
         overview: json["overview"],

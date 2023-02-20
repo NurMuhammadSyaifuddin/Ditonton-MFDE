@@ -28,9 +28,9 @@ void main() {
     );
   });
 
-  final tTvShowModel = TvShowModel(
+  const tTvShowModel = TvShowModel(
     backdropPath: '/xYkydf9m337nG9guG7MpBWumPOh.jpg',
-    genreIds: const [35],
+    genreIds: [35],
     id: 8086,
     originalName: 'The Julekalender',
     overview:

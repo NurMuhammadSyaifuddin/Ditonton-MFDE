@@ -7,9 +7,9 @@ import 'package:flutter_test/flutter_test.dart';
 import '../../json_reader.dart';
 
 void main() {
-  final tTvShowModel = TvShowModel(
+  const tTvShowModel = TvShowModel(
     backdropPath: "/qcpC9lv6VLL4Zw45EveYELyje1w.jpg",
-    genreIds: const [18, 10766, 10751],
+    genreIds: [18, 10766, 10751],
     id: 111453,
     originalName: "घुम है किसिकी प्यार में",
     overview: "Virat sacrifices his love to honour the promise he made to a dying man. Trapped between the past and the present, will he find love beyond the chains of duty?",
@@ -20,7 +20,7 @@ void main() {
     voteAverage: 5.5,
     voteCount: 24,
   );
-  final tTvShowResponseModel =
+  const tTvShowResponseModel =
       TvShowResponse(tvshowList: <TvShowModel>[tTvShowModel]);
   group('fromJson', () {
     test('should return a valid model from JSON', () async {

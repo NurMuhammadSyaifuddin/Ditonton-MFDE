@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 import '../../../domain/entities/tvshow/tvshow.dart';
 
 class TvShowModel extends Equatable {
-  TvShowModel({
+  const TvShowModel({
     required this.backdropPath,
     required this.genreIds,
     required this.id,
@@ -31,7 +31,7 @@ class TvShowModel extends Equatable {
 
   factory TvShowModel.fromJson(Map<String, dynamic> json) => TvShowModel(
     backdropPath: json["backdrop_path"],
-    genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+    genreIds: List<int>.from(json["genre_ids"]),
     id: json["id"],
     originalName: json["original_name"],
     overview: json["overview"],
@@ -59,17 +59,17 @@ class TvShowModel extends Equatable {
 
   TvShow toEntity() {
     return TvShow(
-      backdropPath: this.backdropPath,
-      genreIds: this.genreIds,
-      id: this.id,
-      originalName: this.originalName,
-      overview: this.overview,
-      popularity: this.popularity,
-      posterPath: this.posterPath,
-      firstAirDate: this.firstAirDate,
-      name: this.name,
-      voteAverage: this.voteAverage,
-      voteCount: this.voteCount,
+      backdropPath: backdropPath,
+      genreIds: genreIds,
+      id: id,
+      originalName: originalName,
+      overview: overview,
+      popularity: popularity,
+      posterPath: posterPath,
+      firstAirDate: firstAirDate,
+      name: name,
+      voteAverage: voteAverage,
+      voteCount: voteCount,
     );
   }
 
