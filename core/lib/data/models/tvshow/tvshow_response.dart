@@ -7,7 +7,7 @@ class TvShowResponse extends Equatable {
   TvShowResponse({required this.tvshowList});
 
   factory TvShowResponse.fromJson(Map<String, dynamic> json) => TvShowResponse(
-      tvshowList: List<TvShowModel>.from((json['results'] as List)
+      tvshowList: List<TvShowModel>.from((json['results'])
       .map((e) => TvShowModel.fromJson(e))
       .where((element) => element.posterPath != null || element.backdropPath != null ||element.firstAirDate != null)));
 
