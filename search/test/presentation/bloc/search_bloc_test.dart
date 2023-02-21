@@ -45,7 +45,7 @@ void main() {
   final tMovieList = <Movie>[tMovieModel];
   const tQuery = 'spiderman';
 
-  blocTest<SearchBloc, SearchState>(
+  blocTest(
     'Should emit [Loading, HasData] when data is gotten successfully',
     build: () {
       when(mockSearchMovies.execute(tQuery))
@@ -63,7 +63,7 @@ void main() {
     },
   );
 
-  blocTest<SearchBloc, SearchState>(
+  blocTest(
     'Should emit [Loading, Error] when get search is unsuccessful',
     build: () {
       when(mockSearchMovies.execute(tQuery))
