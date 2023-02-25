@@ -1,20 +1,23 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_airing_today_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_event.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_state.dart';
 import 'package:core/presentation/pages/tvshow/tvshow_detail_page.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../domain/entities/tvshow/tvshow.dart';
 import '../../../styles/text_styles.dart';
 import '../../../utils/constants.dart';
 import '../../../utils/routes.dart';
-import '../../../utils/state_enum.dart';
-import '../../provider/tvshow/tvshow_list_notifier.dart';
+import '../../bloc/tvshow/tvshow_popular_bloc.dart';
+import '../../bloc/tvshow/tvshow_top_rated_bloc.dart';
 import '../../widgets/bottom_nav_bar.dart';
 
 class HomeTvShowPage extends StatefulWidget {
-  static const ROUTE_NAME = '/home-tvshow';
 
   const HomeTvShowPage({super.key});
+
   @override
   // ignore: library_private_types_in_public_api
   _HomeTvShowPageState createState() => _HomeTvShowPageState();
@@ -24,11 +27,11 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-            () => Provider.of<TvShowListNotifier>(context, listen: false)
-          ..fetchAiringTodayTvShow()
-          ..fetchPopularTvShow()
-          ..fetchTopRatedTvShow());
+    Future.microtask(() {
+      context.read<TvShowTopRatedBloc>().add(const TopRatedTvShow());
+      context.read<TvShowPopularBloc>().add(const PopularTvShow());
+      context.read<TvShowAiringTodayBloc>().add(const AiringTodayTvShow());
+    });
   }
 
   @override
@@ -46,9 +49,11 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
             },
             icon: const Icon(Icons.search),
           ),
-          IconButton(onPressed: (){
-            Navigator.pushNamed(context, ABOUT_ROUTE);
-          }, icon: const Icon(Icons.info_outline))
+          IconButton(
+              onPressed: () {
+                Navigator.pushNamed(context, ABOUT_ROUTE);
+              },
+              icon: const Icon(Icons.info_outline))
         ],
       ),
       body: Padding(
@@ -62,31 +67,28 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, AIRING_TODAY_TVSHOW_ROUTE),
               ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.airingTodayState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TvShowAiringTodayBloc, TvShowState>(builder: (context, state) {
+                if (state is TvShowLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvShowList(data.airingTodayTvShow);
+                } else if (state is TvShowHashData) {
+                  return TvShowList(state.result);
                 } else {
                   return const Text('Failed');
                 }
               }),
               _buildSubHeading(
                 title: 'Popular',
-                onTap: () =>
-                    Navigator.pushNamed(context, POPULAR_TVSHOW_ROUTE),
+                onTap: () => Navigator.pushNamed(context, POPULAR_TVSHOW_ROUTE),
               ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.popularTvShowState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TvShowPopularBloc, TvShowState>(builder: (context, state) {
+                if (state is TvShowLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvShowList(data.popularTvShow);
+                } else if (state is TvShowHashData) {
+                  return TvShowList(state.result);
                 } else {
                   return const Text('Failed');
                 }
@@ -96,14 +98,13 @@ class _HomeTvShowPageState extends State<HomeTvShowPage> {
                 onTap: () =>
                     Navigator.pushNamed(context, TOP_RATED_TVSHOW_ROUTE),
               ),
-              Consumer<TvShowListNotifier>(builder: (context, data, child) {
-                final state = data.topRatedTvShowState;
-                if (state == RequestState.Loading) {
+              BlocBuilder<TvShowTopRatedBloc, TvShowState>(builder: (context, state) {
+                if (state is TvShowLoading) {
                   return const Center(
                     child: CircularProgressIndicator(),
                   );
-                } else if (state == RequestState.Loaded) {
-                  return TvShowList(data.topRatedTvShow);
+                } else if (state is TvShowHashData) {
+                  return TvShowList(state.result);
                 } else {
                   return const Text('Failed');
                 }

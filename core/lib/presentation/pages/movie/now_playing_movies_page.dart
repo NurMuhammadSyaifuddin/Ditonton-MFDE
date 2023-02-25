@@ -1,13 +1,12 @@
+import 'package:core/presentation/bloc/movie/movie_event.dart';
+import 'package:core/presentation/bloc/movie/movie_now_playing_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../utils/state_enum.dart';
-import '../../provider/movie/now_playing_movies_notifier.dart';
 import '../../widgets/movie_card_list.dart';
 
 class NowPlayingMoviesPage extends StatefulWidget {
-  static const ROUTE_NAME = '/now-playing-movie';
-
   const NowPlayingMoviesPage({super.key});
 
   @override
@@ -19,9 +18,7 @@ class _NowPlayingMoviesPageState extends State<NowPlayingMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<NowPlayingMoviesNotifier>(context, listen: false)
-            .fetchNowPlayingMovies());
+    Future.microtask(() => context.read<MovieNowPlayingBloc>().add(const NowPlayingMovies()));
   }
 
   @override
@@ -32,27 +29,28 @@ class _NowPlayingMoviesPageState extends State<NowPlayingMoviesPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<NowPlayingMoviesNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<MovieNowPlayingBloc, MovieState>(
+          builder: (context, state){
+            if (state is MovieLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state is MovieHashData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final movie = data.movies[index];
+                  final movie = state.result[index];
                   return MovieCard(movie);
                 },
-                itemCount: data.movies.length,
+                itemCount: state.result.length,
               );
-            } else {
+            } else if (state is MovieError) {
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
             }
-          },
+            return Container();
+          }
         ),
       ),
     );

@@ -5,12 +5,13 @@ import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:search/bloc/search_bloc.dart';
-import 'package:search/bloc/search_state.dart';
-import 'package:search/domain/usecase/search_movies.dart';
+import 'package:search/bloc/movie/search_bloc.dart';
+import 'package:search/bloc/movie/search_state.dart';
+import 'package:core/domain/usecases/movie/search_movies.dart';
 
-import '../../movie_search_notifier_test.mocks.dart';
-import 'package:search/bloc/search_event.dart';
+import 'package:search/bloc/movie/search_event.dart';
+
+import 'search_bloc_test.mocks.dart';
 
 @GenerateMocks([SearchMovies])
 void main() {
@@ -53,7 +54,7 @@ void main() {
       return searchBloc;
     },
     act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
-    wait: const Duration(milliseconds: 200),
+    wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchLoading(),
       SearchHasData(tMovieList),
@@ -71,7 +72,7 @@ void main() {
       return searchBloc;
     },
     act: (bloc) => bloc.add(const OnQueryChanged(tQuery)),
-    wait: const Duration(milliseconds: 200),
+    wait: const Duration(milliseconds: 500),
     expect: () => [
       SearchLoading(),
       const SearchError('Server Failure'),

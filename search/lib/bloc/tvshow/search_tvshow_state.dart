@@ -1,0 +1,31 @@
+import 'package:core/domain/entities/tvshow/tvshow.dart';
+import 'package:equatable/equatable.dart';
+
+abstract class SearchTvShowState extends Equatable {
+  const SearchTvShowState();
+
+  @override
+  List<Object> get props => [];
+}
+
+class SearchTvShowEmpty extends SearchTvShowState {}
+
+class SearchTvShowLoading extends SearchTvShowState {}
+
+class SearchTvShowError extends SearchTvShowState {
+  final String message;
+
+  const SearchTvShowError(this.message);
+
+  @override
+  List<Object> get props => [message];
+}
+
+class SearchTvShowHasData extends SearchTvShowState {
+  final List<TvShow> result;
+
+  const SearchTvShowHasData(this.result);
+
+  @override
+  List<Object> get props => [result];
+}

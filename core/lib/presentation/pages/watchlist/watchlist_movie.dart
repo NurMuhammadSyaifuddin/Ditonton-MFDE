@@ -1,10 +1,11 @@
+import 'package:core/presentation/bloc/movie/movie_event.dart';
+import 'package:core/presentation/bloc/movie/movie_state.dart';
+import 'package:core/presentation/bloc/movie/movie_watchlist_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../styles/colors.dart';
-import '../../../utils/state_enum.dart';
 import '../../../utils/utils.dart';
-import '../../provider/movie/watchlist_movie_notifier.dart';
 import '../../widgets/movie_card_list.dart';
 
 class WatchlistMovie extends StatefulWidget {
@@ -20,8 +21,7 @@ class _WatchlistMovieState extends State<WatchlistMovie> with RouteAware {
   void initState() {
     super.initState();
     Future.microtask(() =>
-        Provider.of<WatchlistMovieNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
+        context.read<MovieWatchlistBloc>().add(const WatchlistMovies()));
   }
 
   @override
@@ -32,8 +32,7 @@ class _WatchlistMovieState extends State<WatchlistMovie> with RouteAware {
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
+    context.read<MovieWatchlistBloc>().add(const WatchlistMovies());
   }
 
   @override
@@ -42,14 +41,14 @@ class _WatchlistMovieState extends State<WatchlistMovie> with RouteAware {
       color: kRichBlack,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: Consumer<WatchlistMovieNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
+        child: BlocBuilder<MovieWatchlistBloc, MovieState>(
+          builder: (context, state) {
+            if (state is MovieLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.watchlistState == RequestState.Loaded) {
-              final dataWatchlist = data.watchlistMovies;
+            } else if (state is MovieHashData) {
+              final dataWatchlist = state.result;
               if (dataWatchlist.isEmpty) {
                 return const Center(
                   child: Text('Data empty :)'),
@@ -59,14 +58,15 @@ class _WatchlistMovieState extends State<WatchlistMovie> with RouteAware {
                 itemBuilder: (context, index) {
                   return MovieCard(dataWatchlist[index]);
                 },
-                itemCount: data.watchlistMovies.length,
+                itemCount: dataWatchlist.length,
               );
-            } else {
+            } else if (state is MovieError){
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
             }
+            return Container();
           },
         ),
       ),

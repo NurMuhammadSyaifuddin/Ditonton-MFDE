@@ -1,12 +1,35 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:about/about_page.dart';
+import 'package:core/presentation/bloc/movie/movie_add_watchlist.dart';
+import 'package:core/presentation/bloc/movie/movie_detail_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_detail_recommendation_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_detail_watchlist_status_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_now_playing_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_popular_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_remove_watchlist.dart';
+import 'package:core/presentation/bloc/movie/movie_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/movie/movie_watchlist_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_add_watchlist.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_airing_today_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_detail_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_detail_recommendation_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_detail_watchlist_status_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_popular_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_remove_watchlist.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_top_rated_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_watchlist_bloc.dart';
 import 'package:core/presentation/pages/movie/home_movie_page.dart';
 import 'package:core/presentation/pages/movie/movie_detail_page.dart';
 import 'package:core/presentation/pages/movie/now_playing_movies_page.dart';
 import 'package:core/presentation/pages/movie/popular_movies_page.dart';
 import 'package:ditonton/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:search/bloc/search_bloc.dart';
+import 'package:search/bloc/movie/search_bloc.dart';
+import 'package:search/bloc/tvshow/search_tvshow_bloc.dart';
 import 'package:search/presentation/pages/movie/search_page.dart';
 import 'package:core/presentation/pages/movie/top_rated_movies_page.dart';
 import 'package:core/presentation/pages/tvshow/airing_today_tvshow_page.dart';
@@ -23,11 +46,18 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:core/core.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:search/presentation/provider/movie/movie_search_notifier.dart';
-import 'package:search/presentation/provider/tvshow/tvshow_search_notifier.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Set SecurityContext to not trust the OS's certificates
+  SecurityContext(withTrustedRoots: false);
+  // Load certificate file
+  ByteData data = await rootBundle.load('assets/certificates.crt');
+  SecurityContext context = SecurityContext.defaultContext;
+  // Trust the certificate
+  context.setTrustedCertificatesBytes(data.buffer.asUint8List());
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -40,49 +70,26 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvShowListNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvShowDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TvShowSearchNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TopRatedTvShowNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<NowPlayingMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<AiringTodayTvShowNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularMoviesNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<PopularTvShowNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistMovieNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<WatchlistTvShowNotifier>(),
-        ),
-        BlocProvider(create: (_) => di.locator<SearchBloc>(),)
+        BlocProvider(create: (_) => di.locator<SearchBloc>(),),
+        BlocProvider(create: (_) => di.locator<SearchTvShowBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieNowPlayingBloc>(),),
+        BlocProvider(create: (_) => di.locator<MoviePopularBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieTopRatedBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowAiringTodayBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowPopularBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowTopRatedBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieDetailBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieWatchlistBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieDetailRecommendationBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieDetailWatchlistStatusBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieAddWatchlistBloc>(),),
+        BlocProvider(create: (_) => di.locator<MovieRemoveWatchlistBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowAddWatchlistBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowRemoveWatchlistBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowDetailRecommendationBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowWatchlistBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowDetailBloc>(),),
+        BlocProvider(create: (_) => di.locator<TvShowDetailWatchlistStatusBloc>(),),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',

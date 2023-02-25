@@ -2,7 +2,7 @@ import 'package:core/domain/entities/movie/movie.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:search/domain/usecase/search_movies.dart';
+import 'package:core/domain/usecases/movie/search_movies.dart';
 
 import '../../core/test/helpers/test_helper.mocks.dart';
 

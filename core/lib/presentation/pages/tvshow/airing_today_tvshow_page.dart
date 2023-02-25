@@ -1,12 +1,11 @@
+import 'package:core/presentation/bloc/tvshow/tvshow_airing_today_bloc.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_event.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_state.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import '../../../utils/state_enum.dart';
-import '../../provider/tvshow/airing_today_tvshow_notifier.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../widgets/tvshow_card_list.dart';
 
 class AiringTodayTvShowPage extends StatefulWidget {
-  static const ROUTE_NAME = '/airing-today-tvshow';
 
   const AiringTodayTvShowPage({super.key});
 
@@ -19,9 +18,7 @@ class _AiringTodayTvShowPageState extends State<AiringTodayTvShowPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<AiringTodayTvShowNotifier>(context, listen: false)
-            .fetchAiringTodayTvShow());
+    Future.microtask(() => context.read<TvShowAiringTodayBloc>().add(const AiringTodayTvShow()));
   }
 
   @override
@@ -32,26 +29,27 @@ class _AiringTodayTvShowPageState extends State<AiringTodayTvShowPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<AiringTodayTvShowNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<TvShowAiringTodayBloc, TvShowState>(
+          builder: (context, state) {
+            if (state is TvShowLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state is TvShowHashData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvshow = data.tvshow[index];
+                  final tvshow = state.result[index];
                   return TvShowCard(tvshow);
                 },
-                itemCount: data.tvshow.length,
+                itemCount: state.result.length,
               );
-            } else {
+            } else if (state is TvShowError){
               return Center(
                 key: const Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
             }
+            return Container();
           },
         ),
       ),

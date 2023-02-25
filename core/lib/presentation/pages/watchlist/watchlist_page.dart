@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import '../../widgets/bottom_nav_bar.dart';
 
 class WatchlistPage extends StatefulWidget {
-  static const ROUTE_NAME = '/watchlist';
 
   const WatchlistPage({super.key});
 
@@ -59,6 +58,6 @@ class _WatchListPage extends State<WatchlistPage>
     ),
     body: TabBarView(
       controller: controller,
-        children: [const WatchlistMovie(), WatchlistTvShow()]),
+        children: const [WatchlistMovie(), WatchlistTvShow()]),
   );
 }

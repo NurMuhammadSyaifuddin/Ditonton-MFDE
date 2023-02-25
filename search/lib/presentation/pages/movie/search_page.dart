@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-// ignore: depend_on_referenced_packages
-import 'package:provider/provider.dart';
-import 'package:core/core.dart';
-import 'package:search/bloc/search_event.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';import 'package:core/core.dart';
+import 'package:search/bloc/movie/search_event.dart';
 
-import '../../../bloc/search_bloc.dart';
-import '../../../bloc/search_state.dart';
-import '../../provider/movie/movie_search_notifier.dart';
+import '../../../bloc/movie/search_bloc.dart';
+import '../../../bloc/movie/search_state.dart';
 
 class SearchPage extends StatelessWidget {
-  static const ROUTE_NAME = '/search';
 
   const SearchPage({super.key});
 

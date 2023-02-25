@@ -1,7 +1,6 @@
+import 'package:core/utils/routes.dart';
 import 'package:flutter/material.dart';
 import '../../styles/colors.dart';
-import '../pages/tvshow/home_tvshow_page.dart';
-import '../pages/watchlist/watchlist_page.dart';
 
 enum TypeBottomNav { movie, tvshow, watchlist }
 
@@ -25,9 +24,9 @@ class _BottomNavBar extends State<BottomNavBar> {
     if (_selectedBottomNavBar == 0) {
       Navigator.pushNamed(context, '/home');
     } else if (_selectedBottomNavBar == 1) {
-      Navigator.pushNamed(context, HomeTvShowPage.ROUTE_NAME);
+      Navigator.pushNamed(context, HOME_TVSHOW_ROUTE);
     } else {
-      Navigator.pushNamed(context, WatchlistPage.ROUTE_NAME);
+      Navigator.pushNamed(context, WATCHLIST_ROUTE);
     }
   }
 

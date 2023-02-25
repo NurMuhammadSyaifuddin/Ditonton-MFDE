@@ -1,10 +1,11 @@
+import 'package:core/presentation/bloc/tvshow/tvshow_state.dart';
+import 'package:core/presentation/bloc/tvshow/tvshow_watchlist_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../styles/colors.dart';
-import '../../../utils/state_enum.dart';
 import '../../../utils/utils.dart';
-import '../../provider/tvshow/watchlist_tvshow_notifier.dart';
+import '../../bloc/tvshow/tvshow_event.dart';
 import '../../widgets/tvshow_card_list.dart';
 
 class WatchlistTvShow extends StatefulWidget {
@@ -12,6 +13,7 @@ class WatchlistTvShow extends StatefulWidget {
 
 
   @override
+  // ignore: library_private_types_in_public_api
   _WatchlistTvShowState createState() => _WatchlistTvShowState();
 }
 
@@ -20,9 +22,7 @@ class _WatchlistTvShowState extends State<WatchlistTvShow>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistTvShowNotifier>(context, listen: false)
-            .fetchWatchlistTvShow());
+    Future.microtask(() => context.read<TvShowWatchlistBloc>().add(const TvShowWatchlist()));
   }
 
   @override
@@ -33,8 +33,7 @@ class _WatchlistTvShowState extends State<WatchlistTvShow>
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistTvShowNotifier>(context, listen: false)
-        .fetchWatchlistTvShow();
+    context.read<TvShowWatchlistBloc>().add(const TvShowWatchlist());
   }
 
   @override
@@ -43,14 +42,14 @@ class _WatchlistTvShowState extends State<WatchlistTvShow>
       color: kRichBlack,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 16),
-        child: Consumer<WatchlistTvShowNotifier>(
-          builder: (context, data, child) {
-            if (data.watchlistState == RequestState.Loading) {
+        child: BlocBuilder<TvShowWatchlistBloc, TvShowState>(
+          builder: (context, state) {
+            if (state is TvShowLoading) {
               return const Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.watchlistState == RequestState.Loaded) {
-              final dataWatchlist = data.watchlistTvShow;
+            } else if (state is TvShowHashData) {
+              final dataWatchlist = state.result;
               if (dataWatchlist.isEmpty) {
                 return const Center(
                   child: Text('Data empty :)'),
@@ -60,15 +59,16 @@ class _WatchlistTvShowState extends State<WatchlistTvShow>
                 itemBuilder: (context, index) {
                   return TvShowCard(dataWatchlist[index]);
                 },
-                itemCount: data.watchlistTvShow.length,
+                itemCount: dataWatchlist.length,
               );
-            } else {
+            } else if (state is TvShowError){
               return Center(
                 // ignore: prefer_const_constructors
                 key: Key('error_message'),
-                child: Text(data.message),
+                child: Text(state.message),
               );
             }
+            return Container();
           },
         ),
       ),
